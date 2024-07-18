@@ -4,6 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const connectDB = require('./config/db');
+const userRoutes = require('./routes/userRoutes');
 
 dotenv.config();
 const app = express();
@@ -17,6 +18,9 @@ app.use(morgan("common"));
 connectDB().then(() => {
   console.log('MongoDB connected successfully');
 });
+
+// Routes
+app.use('/api/user', userRoutes);
 
 // Health Check
 app.get('/', (req, res) => {

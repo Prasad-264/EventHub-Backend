@@ -19,8 +19,7 @@ const userSchema = new mongoose.Schema({
 		required: true
 	},
 	location: {
-		type: String,
-		required: true
+		type: String
 	},
 	interests: [{
 		type: mongoose.Schema.Types.ObjectId,
@@ -34,10 +33,6 @@ const userSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
 	}],
-	activities: [{
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Activity'
-	}]
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);
