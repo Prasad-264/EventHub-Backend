@@ -143,6 +143,37 @@ const getEventsForUser = async (req, res) => {
   }
 };
 
+// Register for event
+const registerForEvent = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { eventId } = req.body;
+
+    const event = await Event.findById(eventId);
+    if (!event) {
+      return res.status(404).json({ error: "Event not found" })
+    }
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $addToSet: { registeredEvents: event._id } },
+      { new: true }
+    ).populate('registeredEvents');
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json({ message: "Event register successfully" });
+  } catch (error) {
+    console.error("Error registering event", error);
+    res.status(500).json({ error: "Failed to register for event" });
+  }
+}
+
+const cancleRegisteredEvent = async (req, res) => {
+
+};
 
 module.exports = { 
   registerUser, 
@@ -151,4 +182,6 @@ module.exports = {
   removeInterest,
   deleteUser,
   getEventsForUser,
+  registerForEvent,
+  cancleRegisteredEvent,
 };
