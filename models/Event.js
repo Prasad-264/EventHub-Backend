@@ -17,8 +17,7 @@ const eventSchema = new mongoose.Schema(
     },
     interests: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Interest",
+        type: String,
       },
     ],
     participants: [

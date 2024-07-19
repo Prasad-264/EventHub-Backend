@@ -132,7 +132,7 @@ const getEventsForUser = async (req, res) => {
     if (user.interests.length === 0) {
       events = await Event.find();
     } else {
-      const interestIds = user.interests.map(interest => interest._id);
+      const interestIds = user.interests.map(interest => interest.name);
       events = await Event.find({ interests: { $in: interestIds } });
     }
 
@@ -142,6 +142,7 @@ const getEventsForUser = async (req, res) => {
     res.status(500).json({ error: "Failed to fetch events" });
   }
 };
+
 
 module.exports = { 
   registerUser, 
