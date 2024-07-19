@@ -9,12 +9,14 @@ const registerUser = async (req, res) => {
     const { firstName, lastName, email, password } = req.body;
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
+
     const newUser = new User({
       firstName,
       lastName,
       email,
       password: passwordHash,
     });
+
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
   } catch (error) {
@@ -39,11 +41,10 @@ const getUserById = async (req, res) => {
   }
 };
 
+// delete the user
 const deleteUser = async (req, res) => {
   try {
     const { userId } = req.params;
-
-    // Find and delete the user
     const user = await User.findByIdAndDelete(userId);
 
     if (!user) {
@@ -57,6 +58,7 @@ const deleteUser = async (req, res) => {
   }
 };
 
+// Add interest to user
 const addInterest = async (req, res) => {
   try {  
     const { userId } = req.params;
@@ -85,6 +87,7 @@ const addInterest = async (req, res) => {
   }
 };
 
+// Remove the interest of user
 const removeInterest = async (req, res) => {
   try {
     const { userId } = req.params;
