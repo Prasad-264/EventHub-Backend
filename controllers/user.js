@@ -1,7 +1,7 @@
 const User = require('../models/User');
 const Interest = require('../models/Interest');
+const Event = require('../models/Event');
 const bcrypt= require('bcrypt');
-const Interests = require('../models/Interest');
 
 // Register a new user
 const registerUser = async (req, res) => {
@@ -116,10 +116,38 @@ const removeInterest = async (req, res) => {
   }
 };
 
+// Get all the events matching with users interest
+const getEventsForUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const user = await User.findById(userId).populate('interests');
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    let events;
+
+    if (user.interests.length === 0) {
+      events = await Event.find();
+    } else {
+      const interestIds = user.interests.map(interest => interest._id);
+      events = await Event.find({ interests: { $in: interestIds } });
+    }
+
+    res.status(200).json({ events });
+  } catch (error) {
+    console.error("Error fetching events", error);
+    res.status(500).json({ error: "Failed to fetch events" });
+  }
+};
+
 module.exports = { 
   registerUser, 
   getUserById,
   addInterest,
   removeInterest,
   deleteUser,
+  getEventsForUser,
 };
