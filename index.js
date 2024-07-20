@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
+const eventRoutes = require('./routes/eventRoutes');
 
 dotenv.config();
 const app = express();
@@ -21,6 +22,7 @@ connectDB().then(() => {
 
 // Routes
 app.use('/api/user', userRoutes);
+app.use('/api/event', eventRoutes);
 
 // Health Check
 app.get('/', (req, res) => {
