@@ -156,13 +156,20 @@ const registerForEvent = async (req, res) => {
 
     const user = await User.findByIdAndUpdate(
       userId,
-      { $addToSet: { registeredEvents: event._id } },
+      { $addToSet: { registeredEvents: event._id } }, // handle dublicates
       { new: true }
-    ).populate('registeredEvents');
+    )
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
+
+    // Update the event's participants
+    await Event.findByIdAndUpdate(
+      eventId,
+      { $addToSet: { participants: userId } },
+      { new: true }
+    );
 
     res.status(200).json({ message: "Event register successfully" });
   } catch (error) {
@@ -191,6 +198,13 @@ const cancelRegisteredEvent = async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
+
+    // Update the event's participants
+    await Event.findByIdAndUpdate(
+      eventId,
+      { $pull: { participants: userId } },
+      { new: true }
+    );
 
     res.status(200).json({ message: "Event cancelled successfully" });
   } catch (error) {
