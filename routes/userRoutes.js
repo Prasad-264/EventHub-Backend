@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const verifyToken = require('../middleware/auth');
 const {
   getUserById,
   registerUser,
@@ -11,12 +12,12 @@ const {
   cancelRegisteredEvent,
 } = require('../controllers/user');
 
-router.get('/:userId', getUserById);
-router.delete('/:userId', deleteUser);
-router.put('/:userId/addInterest', addInterest);
-router.delete('/:userId/removeInterest', removeInterest);
-router.get('/:userId/events', getEventsForUser);
-router.put('/:userId/register-for-event', registerForEvent);
-router.delete('/:userId/cancle-registration', cancelRegisteredEvent);
+router.get('/:userId', verifyToken, getUserById);
+router.delete('/:userId', verifyToken, deleteUser);
+router.put('/:userId/addInterest', verifyToken, addInterest);
+router.delete('/:userId/removeInterest', verifyToken, removeInterest);
+router.get('/:userId/events', verifyToken, getEventsForUser);
+router.put('/:userId/register-for-event', verifyToken, registerForEvent);
+router.delete('/:userId/cancle-registration', verifyToken, cancelRegisteredEvent);
 
 module.exports = router;
