@@ -8,7 +8,7 @@ const {
   deleteUser,
   getEventsForUser,
   registerForEvent,
-  cancleRegisteredEvent,
+  cancelRegisteredEvent,
 } = require('../controllers/user');
 
 router.post('/register', registerUser);
@@ -18,6 +18,6 @@ router.put('/:userId/addInterest', addInterest);
 router.delete('/:userId/removeInterest', removeInterest);
 router.get('/:userId/events', getEventsForUser);
 router.put('/:userId/register-for-event', registerForEvent);
-router.delete('/:userId/cancle-registration', cancleRegisteredEvent);
+router.delete('/:userId/cancle-registration', cancelRegisteredEvent);
 
 module.exports = router;

@@ -171,8 +171,32 @@ const registerForEvent = async (req, res) => {
   }
 }
 
-const cancleRegisteredEvent = async (req, res) => {
+// remove registered event from user
+const cancelRegisteredEvent = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { eventId } = req.body;
 
+    const event = await Event.findById(eventId);
+    if (!event) {
+      return res.status(404).json({ error: "Event not found" })
+    }
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $pull: { registeredEvents: event._id } },
+      { new: true }
+    ).populate('registeredEvents');
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json({ message: "Event cancelled successfully" });
+  } catch (error) {
+    console.error("Error cancelling event", error);
+    res.status(500).json({ error: "Failed to cancel the event" });
+  }
 };
 
 module.exports = { 
@@ -183,5 +207,5 @@ module.exports = {
   deleteUser,
   getEventsForUser,
   registerForEvent,
-  cancleRegisteredEvent,
+  cancelRegisteredEvent,
 };
