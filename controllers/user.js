@@ -1,28 +1,6 @@
 const User = require('../models/User');
 const Interest = require('../models/Interest');
 const Event = require('../models/Event');
-const bcrypt= require('bcrypt');
-
-// Register a new user
-const registerUser = async (req, res) => {
-  try {
-    const { firstName, lastName, email, password } = req.body;
-    const salt = await bcrypt.genSalt();
-    const passwordHash = await bcrypt.hash(password, salt);
-
-    const newUser = new User({
-      firstName,
-      lastName,
-      email,
-      password: passwordHash,
-    });
-
-    const savedUser = await newUser.save();
-    res.status(201).json(savedUser);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-};
 
 // Get User details using userId
 const getUserById = async (req, res) => {
@@ -213,8 +191,7 @@ const cancelRegisteredEvent = async (req, res) => {
   }
 };
 
-module.exports = { 
-  registerUser, 
+module.exports = {
   getUserById,
   addInterest,
   removeInterest,

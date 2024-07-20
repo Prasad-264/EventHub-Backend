@@ -11,7 +11,6 @@ const {
   cancelRegisteredEvent,
 } = require('../controllers/user');
 
-router.post('/register', registerUser);
 router.get('/:userId', getUserById);
 router.delete('/:userId', deleteUser);
 router.put('/:userId/addInterest', addInterest);

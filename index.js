@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const eventRoutes = require('./routes/eventRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 dotenv.config();
 const app = express();
@@ -21,6 +22,7 @@ connectDB().then(() => {
 });
 
 // Routes
+app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/event', eventRoutes);
 
