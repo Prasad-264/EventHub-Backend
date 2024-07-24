@@ -114,7 +114,7 @@ const getEventsForUser = async (req, res) => {
       events = await Event.find({ interests: { $in: interestIds } });
     }
 
-    res.status(200).json({ events });
+    res.status(200).json( events );
   } catch (error) {
     console.error("Error fetching events", error);
     res.status(500).json({ error: "Failed to fetch events" });
