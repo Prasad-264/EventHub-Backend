@@ -13,8 +13,10 @@ const getUserById = async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
-    delete user.password;
-    res.status(200).json(user);
+    const userObject = user.toObject(); 
+    delete userObject.password;
+
+    res.status(200).json(userObject);
   } catch (error) {
     console.log("Error in getting user details", error);
     res.status(500).json({ error: "Failed to fetch user" });
