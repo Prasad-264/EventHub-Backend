@@ -6,12 +6,14 @@ const Event = require('../models/Event');
 const getUserById = async (req, res) => {
   try {
     const { userId } = req.params;
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).populate([
+      { path: "registeredEvents", select: "title date location image" },
+    ]);
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
-
+    delete user.password;
     res.status(200).json({ user });
   } catch (error) {
     console.log("Error in getting user details", error);
