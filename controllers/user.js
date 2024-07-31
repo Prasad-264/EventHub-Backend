@@ -6,13 +6,12 @@ const Event = require('../models/Event');
 const getUserById = async (req, res) => {
   try {
     const { userId } = req.params;
-    const user = await User.findById(userId).populate([
-      { path: "registeredEvents", select: "title date location image" },
-    ]);
+    const user = await User.findById(userId);
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
+    
     const userObject = user.toObject(); 
     delete userObject.password;
 
@@ -195,6 +194,27 @@ const cancelRegisteredEvent = async (req, res) => {
   }
 };
 
+const getRegisteredEvents = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const user = await User.findById(userId).populate({
+      path: 'registeredEvents',
+      select: 'title date location image',
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json(user.registeredEvents);
+  } catch (error) {
+    console.error("Error in fetching registered events", error);
+    res.status(500).json({ error: "Failed to fetch the events" });
+  }
+};
+
+
 module.exports = {
   getUserById,
   addInterest,
@@ -203,4 +223,5 @@ module.exports = {
   getEventsForUser,
   registerForEvent,
   cancelRegisteredEvent,
+  getRegisteredEvents
 };
