@@ -175,7 +175,7 @@ const cancelRegisteredEvent = async (req, res) => {
       userId,
       { $pull: { registeredEvents: event._id } },
       { new: true }
-    ).populate('registeredEvents');
+    );
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
