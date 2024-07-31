@@ -18,6 +18,6 @@ router.put('/:userId/addInterest', verifyToken, addInterest);
 router.delete('/:userId/removeInterest', verifyToken, removeInterest);
 router.get('/:userId/events', verifyToken, getEventsForUser);
 router.put('/:userId/register-for-event', verifyToken, registerForEvent);
-router.delete('/:userId/cancle-registration', verifyToken, cancelRegisteredEvent);
+router.delete('/:userId/cancel-registration', verifyToken, cancelRegisteredEvent);
 
 module.exports = router;
