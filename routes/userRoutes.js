@@ -10,7 +10,8 @@ const {
   getEventsForUser,
   registerForEvent,
   cancelRegisteredEvent,
-  getRegisteredEvents
+  getRegisteredEvents,
+  getUserInterests,
 } = require('../controllers/user');
 
 router.get('/:userId', verifyToken, getUserById);
@@ -21,5 +22,6 @@ router.get('/:userId/events', verifyToken, getEventsForUser);
 router.put('/:userId/register-for-event', verifyToken, registerForEvent);
 router.delete('/:userId/cancel-registration', verifyToken, cancelRegisteredEvent);
 router.get('/:userId/registered-events', verifyToken, getRegisteredEvents);
+router.get('/:userId/getInterests', verifyToken, getUserInterests);
 
 module.exports = router;
