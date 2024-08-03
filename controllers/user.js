@@ -218,7 +218,10 @@ const getUserInterests = async (req, res) => {
   try {
     const { userId } = req.params;
 
-    const user = await User.findById(userId).populate("interests");
+    const user = await User.findById(userId).populate({
+      path: 'interests',
+      select: 'name',
+    });
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
