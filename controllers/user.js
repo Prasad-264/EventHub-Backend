@@ -194,6 +194,7 @@ const cancelRegisteredEvent = async (req, res) => {
   }
 };
 
+// get all the registered events
 const getRegisteredEvents = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -214,6 +215,7 @@ const getRegisteredEvents = async (req, res) => {
   }
 };
 
+// get all the added interests
 const getUserInterests = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -234,7 +236,8 @@ const getUserInterests = async (req, res) => {
   }
 };
 
-
+// Add friend
+// remove friend
 
 module.exports = {
   getUserById,
