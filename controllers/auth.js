@@ -47,7 +47,7 @@ const loginUser = async (req, res) => {
       return res.status(400).json({ error: "Invalid email or password" });
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY_TOKEN, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY_TOKEN, { expiresIn: '12h' });
 
     const userObject = user.toObject();
 		delete userObject.password;
