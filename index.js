@@ -7,6 +7,7 @@ const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const eventRoutes = require('./routes/eventRoutes');
 const authRoutes = require('./routes/authRoutes');
+const friendRoutes = require('./routes/friendRoutes');
 
 dotenv.config();
 const app = express();
@@ -25,6 +26,7 @@ connectDB().then(() => {
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/event', eventRoutes);
+app.use('/api/friend', friendRoutes);
 
 // Health Check
 app.get('/', (req, res) => {
