@@ -236,9 +236,6 @@ const getUserInterests = async (req, res) => {
   }
 };
 
-// Add friend
-// remove friend
-
 module.exports = {
   getUserById,
   addInterest,
